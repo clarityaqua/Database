@@ -24,7 +24,7 @@ WHERE
 	genres = 'Documentary' OR genres = 
   'Comedy';
   
--- IN을 사용해서 작성해도 같은 결과 값을 보여준다.
+-- IN을 사용해서 작성해도 같은 결과 값을 보여준다. (결과 값은 같지만, 더 깔끔한 쿼리)
 SELECT
 	*
 FROM
@@ -46,20 +46,23 @@ SELECT
 FROM
 	movies
 WHERE
-	title LIKE 'The%'; -- 제목에 the라는 단어가 있거나 그것으로 시작하는 영화 요청 쿼리
-  -- %: 와일드카드 > 나머지 뒷 부분은 신경쓰지 않음
-  title LIKE '%Love'; -- 뒷 부분에 Love가 붙는 title 검색
+	title LIKE 'The%'; -- 제목에 'The'로 시작하는 title 검색
+  -- %: 와일드카드 > 나머지 부분은 신경쓰지 않음
+  title LIKE '%Love'; -- 뒷 부분에 'Love'가 붙는 title 검색
 	
-  overview LIKE '%kimchi%'; -- overview에 kimchi 단어를 검색
+  overview LIKE '%kimchi%'; -- overview에 'kimchi' 단어를 검색 (중간에 있어도 검색)
 	
-  genres = 'Drama'; -- 이렇게 작성하면 딱 Drama 단어만 검색
-  genres LIKE %Drama%; -- 와일드카드를 앞/뒤로 붙여 드라마나 다른 장르가 있는 영화를 검색 (해당 단어가 중간에 있어도 검색)
-  genres NOT LIKE %Drama%; -- 드라마에 속하지 않는 영화를 검색
+  genres = 'Drama'; -- 'Drama' genres만 검색
+  genres LIKE '%Drama%'; -- 'Drama' genres 단어를 검색 (위치 상관 없음)
+  genres NOT LIKE '%Drama%'; -- 장르가 'Drama'에 속하지 않는 영화를 검색
 
-	title LIKE '___ing'; -- ing로 끝나는 6글자 단어가 포함된 영화를 검색 (ing 이전에 어떤 글자가 나오든 상관하지 않음)
- 	title LIKE 'THE___'; -- THE 다음 3글자로 끝나는 title 검색
-  title LIKE 'THE __'; -- THE 다음 공백, 2글자로 끝나는 title 검색
+	title LIKE '___ing'; -- 'ing'로 끝나는 6글자 단어가 포함된 영화를 검색 (ing 이전에 어떤 글자가 나오든 상관하지 않음)
+ 	title LIKE 'THE___'; -- 'THE' 다음 3글자로 끝나는 title 검색
+  title LIKE 'THE __'; -- 'THE' 다음 공백, 2글자로 끝나는 title 검색
   
-  title LIKE 'The ___ %'; -- THE로 시작하고 공백 다음에 3개의 글자 그리고 공백 뒤에는 상관없는 영화 검색
+  director LIKE '%Roberts' -- 뒷부분에 'Roberts'가 붙는 director 검색
+  director LIKE '_____ Roberts' -- 앞에 5글자 공백 'Roberts' director 검색
+  
+  title LIKE 'The ___ %'; -- 'THE'로 시작하고 공백 다음에 3개의 글자 그리고 공백 뒤에는 상관없는 영화 검색
   
  -- 배운 것 : 조건에 범위를 추가하는 것, condition & membership, LIKE & NOT LIKE
